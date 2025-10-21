@@ -182,7 +182,17 @@ def poll_hyprmx():
         return jsonify(data)
     except Exception as e:
         return jsonify({"error": str(e), "trace": traceback.format_exc()}), 500
-
+# --- הוסף את הנתיב הזה באופן זמני ---
+@app.route('/debug-ip')
+def get_server_ip():
+    try:
+        # אנחנו שואלים שירות חיצוני "מה ה-IP שלי"
+        response = requests.get('https://api.ipify.org?format=json')
+        ip_data = response.json()
+        return jsonify({"my_outbound_ip": ip_data["ip"]})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+# ------------------------------------
 if __name__ == '__main__':
     # מריץ את השרת המקומי לצורכי פיתוח
     app.run(host='0.0.0.0', port=5001, debug=True)
