@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Polling Tool</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Manual Polling Tool</h1>
+
+        <div class="tab-container">
+            <div class="tab-buttons">
+                <button class="tab-button active" data-tab="admob-nonsso">AdMob (Non-SSO)</button>
+                <button class="tab-button" data-tab="admob-sso">AdMob (SSO)</button>
+                <button class="tab-button" data-tab="gam">GAM</button>
+                <button class="tab-button" data-tab="applovin">AppLovin</button>
+                <button class="tab-button" data-tab="chartboost">Chartboost</button>
+                <button class="tab-button" data-tab="facebook">Facebook</button>
+                <button class="tab-button" data-tab="fyber">Fyber</button>
+                <button class="tab-button" data-tab="inmobi">InMobi</button>
+            </div>
+
+            <div class="tab-content">
+                <div id="admob-nonsso" class="tab-pane active">
+                    <h2>AdMob (Non-SSO) Parameters</h2>
+                    <form id="admob-nonsso-form" data-endpoint="/api/poll/admob_nonsso">
+                        <div class="form-grid">
+                            <label for="admob-client-id">Client ID:</label>
+                            <input type="text" id="admob-client-id" required>
+
+                            <label for="admob-client-secret">Client Secret:</label>
+                            <input type="text" id="admob-client-secret" required>
+
+                            <label for="admob-refresh-token">Refresh Token:</label>
+                            <input type="text" id="admob-refresh-token" required>
+
+                            <label for="admob-publisher-id">Publisher ID:</label>
+                            <input type="text" id="admob-publisher-id" required>
+
+                            <label for="admob-start-date">Start Date:</label>
+                            <input type="date" id="admob-start-date" required>
+
+                            <label for="admob-end-date">End Date:</label>
+                            <input type="date" id="admob-end-date" required>
+                        </div>
+
+                        <h4>Dimensions & Metrics</h4>
+                        <div class="checkbox-container">
+                            <div id="admob-dimensions">
+                                </div>
+                            <div id="admob-metrics">
+                                </div>
+                        </div>
+
+                        <button type="submit">Start Polling</button>
+                    </form>
+                    <div class="status" id="admob-nonsso-status"></div>
+                    <div class="results" id="admob-nonsso-results"></div>
+                </div>
+
+                <div id="admob-sso" class="tab-pane">
+                    <h2>AdMob (SSO)</h2>
+                    <p>This feature is currently under development. The necessary backend endpoint exists as a placeholder.</p>
+                </div>
+
+                <div id="gam" class="tab-pane">
+                     <h2>Google Ad Manager (GAM) Parameters</h2>
+                    <form id="gam-form" data-endpoint="/api/poll/gam">
+                        <div class="form-grid">
+                            <label for="gam-client-id">Client ID:</label>
+                            <input type="text" id="gam-client-id" required>
+                            <label for="gam-client-secret">Client Secret:</label>
+                            <input type="text" id="gam-client-secret" required>
+                            <label for="gam-refresh-token">Refresh Token:</label>
+                            <input type="text" id="gam-refresh-token" required>
+                            <label for="gam-network-code">Network Code:</label>
+                            <input type="text" id="gam-network-code" required>
+                            <label for="gam-start-date">Start Date:</label>
+                            <input type="date" id="gam-start-date" required>
+                            <label for="gam-end-date">End Date:</label>
+                            <input type="date" id="gam-end-date" required>
+                        </div>
+                        <h4>Dimensions & Metrics</h4>
+                        <div class="checkbox-container">
+                            <div id="gam-dimensions"></div>
+                            <div id="gam-metrics"></div>
+                        </div>
+                        <button type="submit">Start Polling</button>
+                    </form>
+                    <div class="status" id="gam-status"></div>
+                    <div class="results" id="gam-results"></div>
+                </div>
+
+                <div id="applovin" class="tab-pane">
+                    <h2>AppLovin Parameters</h2>
+                    <form id="applovin-form" data-endpoint="/api/poll/applovin">
+                        <div class="form-grid single-column">
+                             <label for="applovin-api-key">API Key:</label>
+                             <input type="text" id="applovin-api-key" required>
+                             <label for="applovin-start-date">Start Date:</label>
+                             <input type="date" id="applovin-start-date" required>
+                             <label for="applovin-end-date">End Date:</label>
+                             <input type="date" id="applovin-end-date" required>
+                        </div>
+                        <h4>Dimensions & Metrics</h4>
+                        <div class="checkbox-container">
+                            <div id="applovin-dimensions"></div>
+                            <div id="applovin-metrics"></div>
+                        </div>
+                        <button type="submit">Start Polling</button>
+                    </form>
+                    <div class="status" id="applovin-status"></div>
+                    <div class="results" id="applovin-results"></div>
+                </div>
+
+                 <div id="chartboost" class="tab-pane">
+                    <h2>Chartboost Parameters</h2>
+                    <form id="chartboost-form" data-endpoint="/api/poll/chartboost">
+                         <div class="form-grid">
+                            <label for="chartboost-app-ids">App ID(s):</label>
+                            <input type="text" id="chartboost-app-ids" placeholder="e.g., id1,id2" required>
+                            <label for="chartboost-user-id">User ID:</label>
+                            <input type="text" id="chartboost-user-id" required>
+                            <label for="chartboost-user-signature">User Signature:</label>
+                            <input type="text" id="chartboost-user-signature" required>
+                            <label for="chartboost-ad-type">Ad Type:</label>
+                            <select id="chartboost-ad-type">
+                                <option value="rv_is_all" selected>RV, IS, All (IDs 4,1,5)</option>
+                                <option value="rewarded_video">Rewarded Video</option>
+                                <option value="interstitial">Interstitial</option>
+                                <option value="all">All (ID 5)</option>
+                            </select>
+                             <label for="chartboost-start-date">Start Date:</label>
+                             <input type="date" id="chartboost-start-date" required>
+                             <label for="chartboost-end-date">End Date:</label>
+                             <input type="date" id="chartboost-end-date" required>
+                        </div>
+                        <h4>Dimensions & Metrics</h4>
+                        <div class="checkbox-container">
+                            <div id="chartboost-dimensions"></div>
+                            <div id="chartboost-metrics"></div>
+                        </div>
+                        <button type="submit">Start Polling</button>
+                    </form>
+                    <div class="status" id="chartboost-status"></div>
+                    <div class="results" id="chartboost-results"></div>
+                </div>
+
+                <div id="facebook" class="tab-pane">
+                    <h2>Facebook Parameters</h2>
+                    <form id="facebook-form" data-endpoint="/api/poll/facebook">
+                        <div class="form-grid">
+                             <label for="facebook-app-id">App ID:</label>
+                             <input type="text" id="facebook-app-id" required>
+                             <label for="facebook-access-token">Access Token:</label>
+                             <input type="text" id="facebook-access-token" required>
+                             <label for="facebook-start-date">Start Date:</label>
+                             <input type="date" id="facebook-start-date" required>
+                             <label for="facebook-end-date">End Date:</label>
+                             <input type="date" id="facebook-end-date" required>
+                        </div>
+                        <h4>Dimensions & Metrics</h4>
+                        <div class="checkbox-container">
+                            <div id="facebook-dimensions"></div>
+                            <div id="facebook-metrics"></div>
+                        </div>
+                        <button type="submit">Start Polling</button>
+                    </form>
+                    <div class="status" id="facebook-status"></div>
+                    <div class="results" id="facebook-results"></div>
+                </div>
+
+                 <div id="fyber" class="tab-pane">
+                    <h2>Fyber Parameters</h2>
+                    <form id="fyber-form" data-endpoint="/api/poll/fyber">
+                         <div class="form-grid">
+                            <label for="fyber-publisher-id">Publisher ID:</label>
+                            <input type="text" id="fyber-publisher-id" required>
+                            <label for="fyber-consumer-key">Consumer Key:</label>
+                            <input type="text" id="fyber-consumer-key" required>
+                            <label for="fyber-consumer-secret">Consumer Secret:</label>
+                            <input type="text" id="fyber-consumer-secret" required>
+                            <span></span> <label for="fyber-start-date">Start Date:</label>
+                             <input type="date" id="fyber-start-date" required>
+                             <label for="fyber-end-date">End Date:</label>
+                             <input type="date" id="fyber-end-date" required>
+                        </div>
+                        <h4>Dimensions & Metrics</h4>
+                        <div class="checkbox-container">
+                            <div id="fyber-dimensions"></div>
+                            <div id="fyber-metrics"></div>
+                        </div>
+                        <button type="submit">Start Polling</button>
+                    </form>
+                    <div class="status" id="fyber-status"></div>
+                    <div class="results" id="fyber-results"></div>
+                </div>
+
+                <div id="inmobi" class="tab-pane">
+                    <h2>InMobi Parameters</h2>
+                    <form id="inmobi-form" data-endpoint="/api/poll/inmobi">
+                         <div class="form-grid">
+                            <label for="inmobi-username">User Name:</label>
+                            <input type="text" id="inmobi-username" required>
+                            <label for="inmobi-secret-key">Secret Key:</label>
+                            <input type="text" id="inmobi-secret-key" required>
+                            <label for="inmobi-filter-placement-ids">Filter Placement IDs (Optional):</label>
+                            <input type="text" id="inmobi-filter-placement-ids" placeholder="e.g., 123,456">
+                            <span></span> <label for="inmobi-start-date">Start Date:</label>
+                             <input type="date" id="inmobi-start-date" required>
+                             <label for="inmobi-end-date">End Date:</label>
+                             <input type="date" id="inmobi-end-date" required>
+                        </div>
+                        <h4>Dimensions & Metrics</h4>
+                        <div class="checkbox-container">
+                            <div id="inmobi-dimensions"></div>
+                            <div id="inmobi-metrics"></div>
+                        </div>
+                        <button type="submit">Start Polling</button>
+                    </form>
+                    <div class="status" id="inmobi-status"></div>
+                    <div class="results" id="inmobi-results"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
