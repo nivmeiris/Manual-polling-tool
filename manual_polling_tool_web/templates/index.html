@@ -14,11 +14,12 @@
             <div class="tab-buttons">
                 <button class="tab-button active" data-tab="admob-nonsso">AdMob (Non-SSO)</button>
                 <button class="tab-button" data-tab="admob-sso">AdMob (SSO)</button>
-                <button class="tab-button" data-tab="gam">GAM</button>
                 <button class="tab-button" data-tab="applovin">AppLovin</button>
                 <button class="tab-button" data-tab="chartboost">Chartboost</button>
                 <button class="tab-button" data-tab="facebook">Facebook</button>
                 <button class="tab-button" data-tab="fyber">Fyber</button>
+                <button class="tab-button" data-tab="gam">GAM</button>
+                <button class="tab-button" data-tab="hyprmx">HyprMX</button>
                 <button class="tab-button" data-tab="inmobi">InMobi</button>
             </div>
 
@@ -62,7 +63,7 @@
 
                 <div id="admob-sso" class="tab-pane">
                     <h2>AdMob (SSO)</h2>
-                    <p>This feature is currently under development. The necessary backend endpoint exists as a placeholder.</p>
+                    <p>This feature is currently under development.</p>
                 </div>
 
                 <div id="gam" class="tab-pane">
@@ -196,6 +197,35 @@
                     </form>
                     <div class="status" id="fyber-status"></div>
                     <div class="results" id="fyber-results"></div>
+                </div>
+
+                <div id="hyprmx" class="tab-pane">
+                    <h2>HyprMX Parameters</h2>
+                    <form id="hyprmx-form" data-endpoint="/api/poll/hyprmx">
+                         <div class="form-grid">
+                            <label for="hyprmx-api-key">API Key:</label>
+                            <input type="password" id="hyprmx-api-key" required>
+
+                            <label for="hyprmx-app-id">App ID:</label>
+                            <input type="text" id="hyprmx-app-id" required>
+
+                             <label for="hyprmx-start-date">Start Date:</label>
+                             <input type="date" id="hyprmx-start-date" required>
+
+                             <label for="hyprmx-end-date">End Date:</label>
+                             <input type="date" id="hyprmx-end-date" required>
+                        </div>
+
+                        <h4>Dimensions (Group By)</h4>
+                        <div class="checkbox-container">
+                            <div id="hyprmx-dimensions">
+                                </div>
+                        </div>
+
+                        <button type="submit">Start Polling</button>
+                    </form>
+                    <div class="status" id="hyprmx-status"></div>
+                    <div class="results" id="hyprmx-results"></div>
                 </div>
 
                 <div id="inmobi" class="tab-pane">

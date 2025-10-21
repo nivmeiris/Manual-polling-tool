@@ -1460,6 +1460,69 @@ class GamClient:
         return csv_header, csv_data_dicts  # Return header and data as list of dicts with raw headers
 
 
+# --- HyprMXClient Class ---
+class HyprMXClient:
+    BASE_URL = "https://reports.hyprmx.com/mediation_reporting/v2"
+
+    # אלו ה-group_by שציינת בדוגמה. אפשר להוסיף עוד אם ה-API תומך.
+    ALL_DIMENSIONS = ["placement", "country"]
+
+    # ה-API שציינת לא כלל פרמטר לבחירת Metrics,
+    # לכן אנו מניחים שהוא מחזיר סט קבוע של Metrics.
+    # המשתמש פשוט יבחר לפי מה יקובצו הנתונים.
+
+    def __init__(self, api_key):
+        self.api_key = api_key.strip()
+
+    def get_report(self, start_date_str, end_date_str, app_id, selected_dimensions):
+
+        # בניית רשימת הפרמטרים
+        params = {
+            "api_key": self.api_key,
+            "app_id": app_id.strip(),
+            "start_date": start_date_str,
+            "end_date": end_date_str
+        }
+
+        # הוספת ה-group_by אם המשתמש בחר
+        if selected_dimensions:
+            params["group_by"] = ",".join(selected_dimensions)
+
+        logging.info(f"HyprMXClient: Requesting report from {self.BASE_URL}")
+        logging.debug(f"HyprMXClient: Report request parameters: {params}")
+
+        response = None
+        try:
+            response = requests.get(self.BASE_URL, params=params)
+            response.raise_for_status()  # יזרוק שגיאה אם הסטטוס הוא 4xx או 5xx
+            report_data = response.json()
+
+            logging.info(f"HyprMXClient: Report response received. Status: {response.status_code}")
+            logging.debug(f"HyprMXClient: Full Report response data: {json.dumps(report_data, indent=2)}")
+
+            # כאן אפשר להוסיף עיבוד נתונים אם צריך,
+            # כרגע פשוט מחזירים את ה-JSON הגולמי
+            return report_data
+
+        except requests.exceptions.RequestException as e:
+            error_message = f"Error fetching HyprMX report: {e}"
+            if response is not None:
+                try:
+                    error_json = response.json()
+                    error_detail = error_json.get("error", {}).get("message", response.text)
+                    error_message = f"HyprMX API Error ({response.status_code}): {error_detail}"
+                except json.JSONDecodeError:
+                    error_message += f". Status Code: {response.status_code}. Response Text: {response.text}"
+
+            logging.error(error_message)
+            raise ConnectionError(error_message)
+        except json.JSONDecodeError:
+            logging.error(f"Invalid JSON response from report endpoint: {response.text}")
+            raise ValueError(f"Invalid JSON response from report endpoint: {response.text}")
+        except Exception as e:
+            logging.error(f"HyprMXClient: Critical error: {e}")
+            raise
+
 # --- InMobiClient Class (FINALIZED based on provided InMobi API calls/responses) ---
 class InMobiClient:
     SESSION_CREATE_URL = "https://api.inmobi.com/v1.0/generatesession/generate"

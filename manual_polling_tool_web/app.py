@@ -2,6 +2,7 @@
 import traceback
 from flask import Flask, render_template, request, jsonify
 
+
 # ייבוא כל הקליינטים מהקובץ הקיים שלך
 from api_clients import (
     AdMobClient,
@@ -10,6 +11,7 @@ from api_clients import (
     FacebookClient,
     FyberClient,
     GamClient,
+    HyprMXClient,
     InMobiClient
 )
 
@@ -163,6 +165,23 @@ def poll_inmobi():
     except Exception as e:
         return jsonify({"error": str(e), "trace": traceback.format_exc()}), 500
 
+# --- 2. הוסף את ה-Endpoint החדש בסוף (לפני __main__) ---
+@app.route('/api/poll/hyprmx', methods=['POST'])
+def poll_hyprmx():
+    try:
+        params = request.json
+        client = HyprMXClient(
+            api_key=params.get('api_key')
+        )
+        data = client.get_report(
+            start_date_str=params.get('start_date'),
+            end_date_str=params.get('end_date'),
+            app_id=params.get('app_id'),
+            selected_dimensions=params.get('dimensions', [])
+        )
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"error": str(e), "trace": traceback.format_exc()}), 500
 
 if __name__ == '__main__':
     # מריץ את השרת המקומי לצורכי פיתוח

@@ -27,6 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
             dimensions: ["app_id", "spot_id", "day", "country_code", "content_id", "content_name", "app_name", "distributor_name", "content_categories"],
             metrics: ["ad_requests", "impressions", "fill_rate", "clicks", "ctr", "ecpm", "revenue"]
         },
+        hyprmx: {
+            dimensions: ["placement", "country"], // מבוסס על הדוגמה שלך
+            metrics: [] // ה-API שסיפקת לא משתמש בזה, אז נשאיר ריק
+        },
         inmobi: {
             dimensions: ["country", "countryId", "placementId", "placementName"],
             metrics: ["earnings"]
